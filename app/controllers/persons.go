@@ -4,40 +4,20 @@ import (
 	"revel_example/app/models"
 	"revel_example/app/routes"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
 	"github.com/revel/revel"
 )
-
-func SetupDB() gorm.DB {
-	db, err := gorm.Open("postgres", "dbname=martini_example sslmode=disable")
-	db.LogMode(true)
-	PanicIf(err)
-	return db
-}
-
-func PanicIf(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
 
 type Persons struct {
 	*revel.Controller
 }
 
-var db gorm.DB = SetupDB()
-
 func (c Persons) Index() revel.Result {
-	persons := []models.Person{}
-	db.Find(&persons)
-
+	persons := models.AllPersons()
 	return c.Render(persons)
 }
 
-func (c Persons) Show(id int) revel.Result {
-	person := models.Person{}
-	db.First(&person, c.Params.Get("id"))
+func (c Persons) Show(id int64) revel.Result {
+	person := models.FindPerson(id)
 	return c.Render(person)
 }
 
@@ -47,25 +27,21 @@ func (c Persons) New() revel.Result {
 }
 
 func (c Persons) Create(person models.Person) revel.Result {
-	db.Create(&person)
+	models.CreatePerson(person)
 	return c.Redirect(routes.Persons.Index())
 }
 
-func (c Persons) Edit() revel.Result {
-	person := models.Person{}
-	db.First(&person, c.Params.Get("id"))
+func (c Persons) Edit(id int64) revel.Result {
+	person := models.FindPerson(id)
 	return c.Render(person)
 }
 
 func (c Persons) Update(id int64, person models.Person) revel.Result {
-	person.Id = id
-	db.Save(&person)
+	models.UpdatePerson(id, person)
 	return c.Redirect(routes.Persons.Index())
 }
 
-func (c Persons) Delete() revel.Result {
-	person := models.Person{}
-	db.First(&person, c.Params.Get("id"))
-	db.Delete(&person)
+func (c Persons) Delete(id int64) revel.Result {
+	models.DeletePerson(id)
 	return c.Redirect(routes.Persons.Index())
 }
