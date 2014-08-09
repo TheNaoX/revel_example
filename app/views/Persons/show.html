@@ -1,0 +1,11 @@
+<a href="/">Return to index</a>
+
+<h1>Displaying {{ .person.Name }}</h1>
+
+<div>
+  <p>Age: {{ .person.Age}}</p>
+  <p>Email: {{ .person.Email}}</p>
+  <p>Job: {{ .person.Job}}</p>
+</div>
+<a href="/persons/{{ .person.Id }}/edit">Edit</a> |
+<a href="/persons/{{ .person.Id }}/delete">Delete</a>
