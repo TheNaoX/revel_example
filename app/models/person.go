@@ -1,10 +1,10 @@
 package models
 
 import (
+	"revel_example/conf"
 	"time"
 
 	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
 )
 
 type Person struct {
@@ -17,20 +17,7 @@ type Person struct {
 	UpdatedAt time.Time
 }
 
-func SetupDB() gorm.DB {
-	db, err := gorm.Open("postgres", "dbname=martini_example sslmode=disable")
-	db.LogMode(true)
-	PanicIf(err)
-	return db
-}
-
-func PanicIf(err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
-var db gorm.DB = SetupDB()
+var db gorm.DB = conf.SetupDB()
 
 func AllPersons() []Person {
 	persons := []Person{}
