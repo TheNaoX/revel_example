@@ -17,7 +17,7 @@ type Person struct {
 	UpdatedAt time.Time
 }
 
-var db gorm.DB = conf.SetupDB()
+var db gorm.DB = conf.SetupDB(Person{})
 
 func AllPersons() []Person {
 	persons := []Person{}
