@@ -37,11 +37,13 @@ func (c Persons) Edit(id int64) revel.Result {
 }
 
 func (c Persons) Update(id int64, person models.Person) revel.Result {
-	models.UpdatePerson(id, person)
+	person.Id = id
+	person.Update()
 	return c.Redirect(routes.Persons.Index())
 }
 
 func (c Persons) Delete(id int64) revel.Result {
-	models.DeletePerson(id)
+	person := models.FindPerson(id)
+	person.Delete()
 	return c.Redirect(routes.Persons.Index())
 }

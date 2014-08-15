@@ -38,14 +38,10 @@ func CreatePerson(person Person) Person {
 	return person
 }
 
-func UpdatePerson(id int64, person Person) Person {
-	person.Id = id
-	db.Save(&person)
-	return person
+func (person *Person) Update() {
+	db.Save(person)
 }
 
-func DeletePerson(id int64) {
-	person := Person{}
-	db.First(&person, id)
-	db.Delete(&person)
+func (person *Person) Delete() {
+	db.Delete(person)
 }
