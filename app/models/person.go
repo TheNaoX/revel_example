@@ -1,11 +1,6 @@
 package models
 
-import (
-	"revel_example/conf"
-	"time"
-
-	"github.com/jinzhu/gorm"
-)
+import "time"
 
 type Person struct {
 	Id        int64
@@ -16,8 +11,6 @@ type Person struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
-
-var db gorm.DB = conf.SetupDB(Person{})
 
 func AllPersons() []Person {
 	persons := []Person{}

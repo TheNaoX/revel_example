@@ -13,7 +13,8 @@ type Persons struct {
 
 func (c Persons) Index() revel.Result {
 	persons := models.AllPersons()
-	return c.Render(persons)
+	users := models.AllUsers()
+	return c.Render(persons, users)
 }
 
 func (c Persons) Show(id int64) revel.Result {
