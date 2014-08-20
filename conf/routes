@@ -11,6 +11,10 @@ GET     /persons/:id/edit                       Persons.Edit
 POST    /persons/:id                            Persons.Update
 GET     /persons/:id                            Persons.Show
 GET     /persons/:id/delete                     Persons.Delete
+GET     /users/sign_up                          Registrations.New
+POST    /users/sign_up                          Registrations.Create
+GET     /users/sign_in                          Sessions.New
+POST    /users/sign_in                          Sessions.Create
 
 
 # Ignore favicon requests

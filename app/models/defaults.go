@@ -8,4 +8,8 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-var db gorm.DB = conf.SetupDB()
+var db gorm.DB = conf.SetupDB(func(db gorm.DB) {
+	// Migrations!!
+	db.AutoMigrate(User{})
+	db.AutoMigrate(Person{})
+})

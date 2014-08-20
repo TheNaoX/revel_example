@@ -5,9 +5,10 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func SetupDB() gorm.DB {
+func SetupDB(AutoMigrate func(gorm.DB)) gorm.DB {
 	db, err := gorm.Open("postgres", "dbname=martini_example sslmode=disable")
 	db.LogMode(true)
+	AutoMigrate(db)
 	PanicIf(err)
 	return db
 }
