@@ -14,6 +14,7 @@ func AuthenticateUser(context *revel.Controller, user models.User, password stri
 			encrypted_password, _ := bcrypt.GenerateFromPassword([]byte(password), 1)
 			user.EncryptedPassword = encrypted_password
 			models.CreateUser(&user)
+			context.Session["user_id"] = string(user.Id)
 		} else {
 			context.Flash.Error("User alredy exists")
 		}
