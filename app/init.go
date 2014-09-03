@@ -7,7 +7,9 @@ import (
 
 func init() {
 	// Filters is the default set of global filters.
-	revel.InterceptMethod(controllers.Application.SetUserSession, revel.BEFORE)
+	revel.InterceptMethod(controllers.Persons.SetUserSession, revel.BEFORE)
+	revel.InterceptMethod(controllers.Registrations.SetUserSession, revel.BEFORE)
+	revel.InterceptMethod(controllers.Sessions.SetUserSession, revel.BEFORE)
 
 	revel.Filters = []revel.Filter{
 		revel.PanicFilter,             // Recover from panics and display an error page instead.
