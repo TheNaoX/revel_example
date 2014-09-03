@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"revel_example/app/models"
+
 	"github.com/revel/revel"
 )
 
@@ -10,7 +11,7 @@ type Application struct {
 	CurrentUser models.User
 }
 
-func (c Application) SetUserSession() revel.Result {
+func (c Application) UserSignedIn() bool {
 	c.CurrentUser = models.FindUserById(c.Session["user_id"])
-	return nil
+	return c.CurrentUser.Id != 0
 }

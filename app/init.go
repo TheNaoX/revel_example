@@ -1,16 +1,9 @@
 package app
 
-import (
-	"github.com/revel/revel"
-	"revel_example/app/controllers"
-)
+import "github.com/revel/revel"
 
 func init() {
 	// Filters is the default set of global filters.
-	revel.InterceptMethod(controllers.Persons.SetUserSession, revel.BEFORE)
-	revel.InterceptMethod(controllers.Registrations.SetUserSession, revel.BEFORE)
-	revel.InterceptMethod(controllers.Sessions.SetUserSession, revel.BEFORE)
-
 	revel.Filters = []revel.Filter{
 		revel.PanicFilter,             // Recover from panics and display an error page instead.
 		revel.RouterFilter,            // Use the routing table to select the right Action

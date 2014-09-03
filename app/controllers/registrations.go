@@ -4,9 +4,9 @@ import (
 	"revel_example/app/models"
 	"revel_example/app/routes"
 	"revel_example/app/services"
-	"github.com/revel/revel"
 	"strconv"
-	"fmt"
+
+	"github.com/revel/revel"
 )
 
 type Registrations struct {
@@ -14,8 +14,7 @@ type Registrations struct {
 }
 
 func (c Registrations) New() revel.Result {
-	fmt.Println(c.Session["user_id"])
-	if c.CurrentUser.Id == 0 {
+	if c.UserSignedIn() {
 		return c.Render()
 	}
 
@@ -23,7 +22,7 @@ func (c Registrations) New() revel.Result {
 }
 
 func (c Registrations) Create(user models.User, password string, password_confirmation string) revel.Result {
-	services.AuthenticateUser(user, password, password_confirmation, func(id int64){
+	services.AuthenticateUser(user, password, password_confirmation, func(id int64) {
 		c.Session["user_id"] = strconv.FormatInt(user.Id, 10)
 	}, func(message string) {
 		c.Flash.Error(message)

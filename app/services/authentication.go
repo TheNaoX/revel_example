@@ -2,6 +2,7 @@ package services
 
 import (
 	"revel_example/app/models"
+
 	"code.google.com/p/go.crypto/bcrypt"
 )
 
