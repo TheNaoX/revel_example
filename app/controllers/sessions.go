@@ -7,7 +7,7 @@ import (
 )
 
 type Sessions struct {
-	*revel.Controller
+	Application
 }
 
 func (c Sessions) New() revel.Result {

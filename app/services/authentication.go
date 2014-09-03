@@ -6,6 +6,7 @@ import (
 	"code.google.com/p/go.crypto/bcrypt"
 
 	"github.com/revel/revel"
+	"strconv"
 )
 
 func AuthenticateUser(context *revel.Controller, user models.User, password string, password_confirmation string) {
@@ -14,7 +15,7 @@ func AuthenticateUser(context *revel.Controller, user models.User, password stri
 			encrypted_password, _ := bcrypt.GenerateFromPassword([]byte(password), 1)
 			user.EncryptedPassword = encrypted_password
 			models.CreateUser(&user)
-			context.Session["user_id"] = string(user.Id)
+			context.Session["user_id"] = strconv.FormatInt(user.Id, 10)
 		} else {
 			context.Flash.Error("User alredy exists")
 		}

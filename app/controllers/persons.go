@@ -8,7 +8,7 @@ import (
 )
 
 type Persons struct {
-	*revel.Controller
+	Application
 }
 
 func (c Persons) Index() revel.Result {

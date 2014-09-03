@@ -20,6 +20,12 @@ func CreateUser(user *User) {
 	db.Save(user)
 }
 
+func FindUserById(value string) User {
+	user := User{}
+	db.Where("id = ?", value).First(&user)
+	return user
+}
+
 func FindUserByEmail(value string) User {
 	user := User{}
 	db.Where("email = ?", value).First(&user)

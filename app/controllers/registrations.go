@@ -9,7 +9,7 @@ import (
 )
 
 type Registrations struct {
-	*revel.Controller
+	Application
 }
 
 func (c Registrations) New() revel.Result {
