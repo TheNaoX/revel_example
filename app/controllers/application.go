@@ -7,9 +7,10 @@ import (
 
 type Application struct {
 	*revel.Controller
+	CurrentUser models.User
 }
 
-func (c Application) GetUserSession() models.User {
-	user := models.FindUserById(c.Session["user_id"])
-	return user
+func (c Application) SetUserSession() revel.Result {
+	c.CurrentUser = models.FindUserById(c.Session["user_id"])
+	return nil
 }
