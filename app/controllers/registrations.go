@@ -15,10 +15,9 @@ type Registrations struct {
 
 func (c Registrations) New() revel.Result {
 	if c.UserSignedIn() {
-		return c.Render()
+		return c.Redirect(routes.Persons.Index())
 	}
-
-	return c.Redirect(routes.Persons.Index())
+	return c.Render()
 }
 
 func (c Registrations) Create(user models.User, password string, password_confirmation string) revel.Result {
@@ -27,5 +26,5 @@ func (c Registrations) Create(user models.User, password string, password_confir
 	}, func(message string) {
 		c.Flash.Error(message)
 	})
-	return c.Redirect(routes.Registrations.New())
+	return c.Redirect(routes.Persons.Index())
 }
