@@ -4,7 +4,6 @@ import (
 	"revel_example/app/models"
 	"revel_example/app/routes"
 	"revel_example/app/services"
-	"strconv"
 
 	"github.com/revel/revel"
 )
@@ -21,8 +20,8 @@ func (c Registrations) New() revel.Result {
 }
 
 func (c Registrations) Create(user models.User, password string, password_confirmation string) revel.Result {
-	services.RegisterUser(user, password, password_confirmation, func(id int64) {
-		c.Session["user_id"] = strconv.FormatInt(user.Id, 10)
+	services.RegisterUser(user, password, password_confirmation, func(token string) {
+		c.Session["session_token"] = token
 	}, func(message string) {
 		c.Flash.Error(message)
 	})

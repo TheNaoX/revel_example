@@ -8,6 +8,7 @@ type User struct {
 	EncryptedPassword []byte
 	CreatedAt         time.Time
 	UpdatedAt         time.Time
+	AuthToken         string
 }
 
 func AllUsers() []User {
@@ -29,5 +30,11 @@ func FindUserById(value string) User {
 func FindUserByEmail(value string) User {
 	user := User{}
 	db.Where("email = ?", value).First(&user)
+	return user
+}
+
+func FindUserByAuthToken(value string) User {
+	user := User{}
+	db.Where("auth_token = ?", value).First(&user)
 	return user
 }
