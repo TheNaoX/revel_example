@@ -21,7 +21,7 @@ func (c Registrations) New() revel.Result {
 }
 
 func (c Registrations) Create(user models.User, password string, password_confirmation string) revel.Result {
-	services.AuthenticateUser(user, password, password_confirmation, func(id int64) {
+	services.RegisterUser(user, password, password_confirmation, func(id int64) {
 		c.Session["user_id"] = strconv.FormatInt(user.Id, 10)
 	}, func(message string) {
 		c.Flash.Error(message)

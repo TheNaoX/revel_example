@@ -6,22 +6,20 @@ import (
 	"code.google.com/p/go.crypto/bcrypt"
 )
 
-func AuthenticateUser(user models.User, password string, password_confirmation string, success func(int64), err func(string)) {
-	if password == password_confirmation {
-		if !UserExists(user) {
-			encrypted_password, _ := bcrypt.GenerateFromPassword([]byte(password), 1)
-			user.EncryptedPassword = encrypted_password
-			models.CreateUser(&user)
+func AuthenticateUser(email string, password string, success func(int64), err func(string)) {
+	user := models.FindUserByEmail(email)
+	if user.Id != 0 {
+		if PasswordValid(user.EncryptedPassword, password) {
 			success(user.Id)
 		} else {
-			err("User alredy exists")
+			err("Invalid login credentials")
 		}
 	} else {
-		err("User alredy exists")
+		err("Invalid login credentials")
 	}
 }
 
-func UserExists(user models.User) bool {
-	u := models.FindUserByEmail(user.Email)
-	return u.Id != 0
+func PasswordValid(user_password []byte, password string) bool {
+	result := bcrypt.CompareHashAndPassword(user_password, []byte(password))
+	return result == nil
 }
